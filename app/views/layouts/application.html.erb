@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CarryMyPackage</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+	  <% if user_signed_in? %>
+	    <%= render 'layouts/header' %><br><br><br>
+	  <% end %>
+	  <div class="container">
+	    <%= render partial: "layouts/flash_messages", flash: flash %> 
+	  	<%= yield %>  	
+	  </div>
+  </body>
+</html>
+
+

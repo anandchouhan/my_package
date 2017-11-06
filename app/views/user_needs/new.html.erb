@@ -1,0 +1,44 @@
+<center>
+	<%= form_for (@user_need),  url: user_needs_path do |f| %>
+	  <% if @user_need.errors.any? %>
+	    <div id="error_explanation">
+	      <h2>
+	        <%#= pluralize(@user.errors.count, "error") %><!--  prohibited
+	        this article from being saved: -->
+	      </h2>
+	      <ul>
+	        <% @user_need.errors.full_messages.each do |msg| %>
+	          <li><%= msg %></li>
+	        <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+
+	  <%= f.label :Origin_country %><br />
+	  <%= f.text_field :origin_country %><br />
+
+	  <%= f.label :Origin_city %><br />
+	  <%= f.text_field :origin_city %><br />
+
+	  <%= f.label :Destination_country %><br />
+	  <%= f.text_field :destination_country %><br />
+
+	  <%= f.label :destination_city %><br />
+	  <%= f.text_field :destination_city %><br />
+
+	  <%= f.label :Date %><br />
+	  <%= f.text_field :date %><br />
+
+	  <%= f.label :Carrying_item %><br />
+	  <%= f.text_field :carrying_item %><br />
+
+	  <%= f.label :Item_weight %><br />
+	  <%= f.text_field :item_weight %><br />
+
+	  <%= f.label :Offering_price %><br />
+	  <%= f.text_field :offering_price %><br /><br />
+	  <%= f.submit 'submit' %>
+	<% end %>
+</center>
+
+

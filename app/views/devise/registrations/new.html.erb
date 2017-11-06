@@ -1,0 +1,94 @@
+<center><h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :First_Name %><br />
+    <%= f.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Last_Name %><br />
+    <%= f.text_field :last_name%>
+  </div> 
+
+
+  <div class="field">
+    <%= f.label :Country %><br />
+    <%= f.collection_select :country, CS.countries, :first, :last %>
+  </div>
+
+  <div class="field">
+    <%= f.label :State %><br />
+    <%= f.select :state, ["Parish of Saint George", "Parish of Saint John", "Parish of Saint Mary", "Parish of Saint Peter", "Barbuda"] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :City %><br />
+    <%= f.select :city, ["indore", "bhopal"] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Country_code %><br />
+    <%= f.text_field :country_code %><br />
+  </div>
+
+
+  <div class="field">
+    <%= f.label :Phone_No %><br />
+    <%= f.text_field :phone_no %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div><br />
+
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+</center>
+
+
+<script type="text/javascript">
+  $("#user_country").change(function(){
+    var country = $(this).val();
+      $.ajax({
+        type: 'GET', 
+        url: "/users/sign_up", 
+        data: {country_tag: country },
+        dataType: "script",
+        success: function(data) {
+        }
+      });
+  });
+
+  $("#user_state").change(function(){
+    var state = $(this).val();
+    var country = $('#user_country').val();
+      $.ajax({
+        type: 'GET', 
+        url: "/users/sign_up", 
+        data: {state_tag: state, country_tag: country},
+        dataType: "script"
+      });
+  });
+</script>
+

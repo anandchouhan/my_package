@@ -1,0 +1,92 @@
+<br>
+<%= form_tag(user_needs_path, :method => "get") do %>
+  <%= text_field_tag :search_origin_country, params[:search_origin_country], placeholder: "Enter Origin country" %>&nbsp; &nbsp; 
+  <%= text_field_tag :search_origin_city, params[:search_origin_city], placeholder: "Enter Origin city"%>&nbsp; &nbsp; 
+  <%= text_field_tag :search_destination_country, params[:search_destination_country], placeholder: "Enter Destionation country"%>&nbsp; &nbsp; 
+  <%= text_field_tag :search_destination_city, params[:search_destination_city], placeholder: "Enter Destionation city"%><br>
+  <center><%= submit_tag "Search", :class => "btn btn-info btn-sm" %> </center><br>
+<% end %>
+
+
+<% if @user_needs.present? %>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover"> 
+      <thead>
+        <tr>
+          <th>Origin country</th>
+          <th>Origin city</th>
+          <th>Destionation country</th>
+          <th>Destionation city</th>
+          <th>Travelling date</th>
+          <th>Capacity</th>
+          <th>Offering price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @user_needs.each do | user_need | %>
+          <tr class="info">
+            <td><%= user_need.origin_country %></td>
+            <td><%= user_need.origin_city %></td>
+            <td><%= user_need.destination_country %></td>
+            <td><%= user_need.destination_city %></td>
+            <td><%= user_need.carrying_item %></td>
+            <td><%= user_need.item_weight %></td>
+            <td>$<%= user_need.offering_price %></td>
+            <% @needer_id = user_need.id %>
+            <% if params[:search_origin_country].present? %>
+              <td><button type="button" class="btn btn-info btn-sm provider_request_button" data-id="<%= user_need.id %>" data-toggle="modal" data-target="#myModal">Send Request</button></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your Request form</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for (@seeker_request),  url: seeker_requests_path do |f| %>
+          <% if @seeker_request.errors.any? %>
+            <div id="error_explanation">
+              <h2>
+                <%#= pluralize(@user.errors.count, "error") %><!--  prohibited
+                this article from being saved: -->
+              </h2>
+              <ul>
+                <% @seeker_request.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= f.hidden_field :needer_id, :value => @needer_id %>
+          <%= f.text_area :message, class: "form-control input",required: true %><br />
+          <%= f.text_field :weight, class: "form-control input", placeholder: "enter your item weight", required: true %><br/>
+      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= f.submit 'submit', class: "btn btn-info" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).on("click", ".provider_request_button", function () {
+    var service_id = $(this).data('id');
+    $(".modal-body .service_provider_id").val(service_id);
+  });
+
+</script>

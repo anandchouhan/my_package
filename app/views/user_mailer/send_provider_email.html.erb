@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello <%= @to.first_name %> <%  @to.last_name %></h1>
+    <p>You have a request for your post matched with below user</p>
+  <% if @request_by == "needer" %>
+    Provider Details:-
+    <% binding.pry %>
+    <p><b>Provider Name</b> <%= @from.first_name %> <%= @from.last_name %></p>
+    <p><b>Provider Email</b> <%= @from.email %></p>
+    <p><b>Provider Phone no</b> <%= @from.phone_no %></p>
+    <p><b>Provider Message</b> <%= @carry_package_detail.message %></p>
+  <% else %>
+    <p><b>Seeker Name</b> <%= @from.first_name %> <%= @from.last_name %></p>
+    <p><b>Seeker Email</b> <%= @from.email %></p>
+    <p><b>Seeker Phone no</b> <%= @from.phone_no %></p>
+    <p><b>Seeker Item weight</b> <%= @carry_package_detail.weight %></p>
+    <p><b>Seeker Message</b> <%= @carry_package_detail.message %></p>
+  <% end %>
+  </body>
+</html>

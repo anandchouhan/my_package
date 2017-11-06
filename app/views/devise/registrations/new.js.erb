@@ -1,0 +1,10 @@
+<% if params.include?("state_tag") %>
+	<% city = CS.cities(params[:state_tag]) %>
+	$('#user_city').html("<%= escape_javascript options_for_select(city) %>");
+	<% code = IsoCountryCodes.find(params[:country_tag]) %>
+  <% code = code.calling %>
+  $('#user_country_code').val("<%= code %>")
+<% else %>
+	<% states = CS.states(params[:country_tag]) %>
+	$('#user_state').html("<%= escape_javascript options_from_collection_for_select(states, :first, :last) %>");
+<% end %>
